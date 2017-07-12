@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>听指令的小方块</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+    <div class="container">
+        <div id="chessTable">
+            <table>
+                <!--<tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>-->
+            </table>
+        </div>
+
+        <div id="oprtBox">
+            <fieldset>
+                <legend>指令操作区</legend>
+                <div class="oprtArea">
+                    <input type="text" placeholder="请输入指令">
+                    <button id="btn_opt">执行</button>
+                    <button id="btn_clear">清除</button>
+
+                </div>
+
+
+                <table cellspacing="0">
+                    <caption>指令表</caption>
+                    <tr>
+                        <td>GO</td>
+                        <td>按照指定的方向向前走</td>
+                    </tr>
+                    <tr>
+                        <td>TRALEF</td>
+                        <td>向屏幕的左侧移动一格，方向不变</td>
+                    </tr>
+                    <tr>
+                        <td>TRATOP</td>
+                        <td>向屏幕的上面移动一格，方向不变</td>
+                    </tr>
+                    <tr>
+                        <td>TRARIG</td>
+                        <td>向屏幕的右侧移动一格，方向不变</td>
+                    </tr>
+                    <tr>
+                        <td>TRABOT</td>
+                        <td>向屏幕的下面移动一格，方向不变</td>
+                    </tr>
+                    <tr>
+                        <td>MOBLEF</td>
+                        <td>方向转向屏幕左侧，并向屏幕的左侧移动一格</td>
+                    </tr>
+                    <tr>
+                        <td>MOBTOP</td>
+                        <td>方向转向屏幕上面，向屏幕的上面移动一格</td>
+                    </tr>
+                    <tr>
+                        <td>MOBRIG</td>
+                        <td>方向转向屏幕右侧，向屏幕的右侧移动一格</td>
+                    </tr>
+                    <tr>
+                        <td>MOVBOT</td>
+                        <td>方向转向屏幕下面，向屏幕的下面移动一格</td>
+                    </tr>
+                    <tr>
+                        <td>TUNLEF</td>
+                        <td>向左旋转</td>
+                    </tr>
+                    <tr>
+                        <td>TUNRIG</td>
+                        <td>向右旋转</td>
+                    </tr>
+                    <tr>
+                        <td>TUNBAC</td>
+                        <td>向后旋转</td>
+                    </tr>
+
+                </table>
+            </fieldset>
+
+
+        </div>
+
+    </div>
+
+    <script type="text/javascript" src="index.js"></script>
+</body>
+</html>

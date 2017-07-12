@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>柱状图表</title>
+    <link href="test5.css" rel="stylesheet">
+</head>
+<body>
+    <fieldset id="form-gra-time">
+        <legend>请选择日期粒度：</legend>   <!--为fieldset元素定义标题-->
+        <label>日<input name="gra-time" value="day" type="radio" checked="checked"></label>
+        <label>周<input name="gra-time" value="week" type="radio"></label>
+        <label>月<input name="gra-time" value="month" type="radio"></label>
+    </fieldset>
+
+    <fieldset>
+        <legend>请选择查看的城市：</legend>
+        <select id="city-select">
+            <option>北京</option>
+        </select>
+    </fieldset>
+
+    <div class="aqi-chart-wrap">
+    </div>
+
+    <script src="test5.js" type="text/javascript"></script>
+
+</body>
+</html>

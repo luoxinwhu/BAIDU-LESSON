@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>听指令的小方块</title>
+    <link rel="stylesheet" href="main3.css">
+</head>
+<body>
+
+    <div class="container">
+        <div id="chessTable">
+            <table>
+                <!--<tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>-->
+            </table>
+
+            <div class="cmdMessage">
+                <h2>指令表</h2>
+                <p>
+                    GO: 按照指定的方向向前走<br/>
+                    TUN LEF: 向左旋转<br/>
+                    TUN RIG: 向右旋转<br/>
+                    TUN BAC: 向后旋转<br/>
+                    TRA LEF：向屏幕的左侧移动一格，方向不变<br/>
+                    TRA TOP：向屏幕的上面移动一格，方向不变<br/>
+                    TRA RIG：向屏幕的右侧移动一格，方向不变<br/>
+                    TRA BOT：向屏幕的下面移动一格，方向不变<br/>
+                    MOV LEF：方向转向屏幕左侧，并向屏幕的左侧移动一格<br/>
+                    MOV TOP：方向转向屏幕上面，向屏幕的上面移动一格<br/>
+                    MOV RIG：方向转向屏幕右侧，向屏幕的右侧移动一格<br/>
+                    MOV BOT：方向转向屏幕下面，向屏幕的下面移动一格<br/>
+                    BUILD: 在当前方块面对的方向前修建一格墙壁<br/>
+                    BRU color: 将图标指向的方向相邻的墙粉刷为指定的颜色
+                </p>
+            </div>
+        </div>
+
+
+        <fieldset>
+            <legend>指令操作区</legend>
+            <div class="oprtArea">
+                <button id="btn_opt">执行</button>
+                <button id="btn_clear">清除</button>
+                <input type="number" id="wall_number" placeholder="输入需要建立的墙数" >
+                <button id="btn_build">建墙</button>
+            </div>
+            <div class="cmdArea">
+                <div id="cmdRowNum">
+
+                </div>
+                <textarea id="cmdText" placeholder="请输入指令"></textarea>
+            </div>
+
+
+        </fieldset>
+
+
+    </div>
+
+    <script type="text/javascript" src="index3.js"></script>
+</body>
+</html>

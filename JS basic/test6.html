@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>queue</title>
+    <style>
+        span{
+            background-color: red;
+            color: white;
+            font-size:24px;
+            padding: 5px;
+            margin-right: 10px;
+        }
+        #result{
+            height: 50px;
+            margin-top: 10px;
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" id="dataInput">
+    <input type="button" value="左侧入" id="btnLeftIn">
+    <input type="button" value="右侧入" id="btnRightIn">
+    <input type="button" value="左侧出" id="btnLeftOut">
+    <input type="button" value="右侧出" id="btnRightOut">
+
+    <div id="result">
+
+    </div>
+
+
+
+    <script type="text/javascript">
+
+        var data,
+            span;
+        var btnLeftIn = document.getElementById('btnLeftIn');
+        var btnRightIn = document.getElementById('btnRightIn');
+        var btnLeftOut = document.getElementById('btnLeftOut');
+        var btnRightOut = document.getElementById('btnRightOut');
+        var result = document.getElementById('result');
+
+
+        function leftIn() {
+            data = Number(document.getElementById('dataInput').value);
+
+            if(data>100 || data<10) {
+                alert('输入的数字有效范围是10~100！');
+            }
+            else {
+                if(result.childElementCount>9) {    //队列最大容量是10，先入队后加1
+                    alert('队列已满！');
+                }
+                else {
+                    result.style.flexDirection = 'row';
+                    span = document.createElement('span');
+                    span.innerHTML = data;
+                    result.insertBefore(span, result.firstChild);
+                }
+            }
+        }
+
+
+
+        function rightIn() {
+            data = document.getElementById('dataInput').value;
+
+            if(data>100 || data<10) {
+                alert('输入的数字有效范围是10~100！');
+            }
+            else {
+                if(result.childElementCount>9) {    //队列最大容量是10，先入队后加1
+                    alert('队列已满！');
+                }
+                else {
+                    result.style.flexDirection = 'row-reverse';
+                    span = document.createElement('span');
+                    span.innerHTML = data;
+                    result.appendChild(span);
+                }
+            }
+        }
+
+
+        function leftOut() {
+
+            result.removeChild(result.childNodes[0]);
+        }
+        function rightOut() {
+
+            result.removeChild(result.lastChild);
+        }
+
+        function init() {
+            btnLeftIn.addEventListener('click', leftIn);
+            btnRightIn.addEventListener('click', rightIn);
+            btnLeftOut.addEventListener('click', leftOut);
+            btnRightOut.addEventListener('click', rightOut);
+        }
+
+        init();
+    </script>
+</body>
+</html>

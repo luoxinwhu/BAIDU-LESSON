@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>多栏布局</title>
+    <style>
+        body{
+            padding: 20px;
+        }
+        .ui{
+            padding: 20px;
+            border: 1px #999 solid;
+            background-color: #fff;
+        }
+        #main{
+            background-color: #eee;
+
+            display: flex;
+            display: -moz-flex;
+            display: -webkit-flex;
+            display: -o-flex;
+
+            flex-direction: row;
+            align-items: flex-start;
+        }
+        #left{
+            width: 200px;
+        }
+        #center{
+            margin: 0 20px;
+        }
+        #center>p{
+            margin: 0;
+        }
+        #right{
+            width: 80px;
+        }
+        .logo{
+            width: 80px;
+            height: 80px;
+            border: 1px #999 solid;
+            background-color: #eee;
+        }
+        #right>.logo{
+            margin-bottom: 20px;
+        }
+        #right>.logo:last-child{
+            margin-bottom: 0px;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="main" class="ui">
+        <div id="left" class="ui">
+            <div class="logo"></div>
+        </div>
+        <div id="center" class="ui">
+            <p>
+                点击test，之后就会出来了 connection successful的提示框，说明已经可以连接到你的github账户了。
+
+                连接成功之后还需要连接下载的git，还是直接在settings中查找git，将git的安装路径输入，点击text，成功之后也会出来个connection successful的提示框，一般只要是看到successful就是没有什么问题了。只要不是提示什么fail啊，error的就继续往下一步吧！
+
+                点击test，之后就会出来了 connection successful的提示框，说明已经可以连接到你的github账户了。
+
+                连接成功之后 点击test，之后就会出来了 connection successful的提示框，说明已经可以连接到你的github账户了。
+
+                连接成功之后还需要连接下载的git，还是直接在settings中查找git，将git的安装路径输入，点击text，成功之后也会出来个connection successful的提示框，一般只要是看到successful就是没有什么问题了。只要不是提示什么fail啊，error的就继续往下一步吧！
+
+                点击test，之后就会出来了 connection successful的提示框，说明已经可以连接到你的github账户了。
+
+                连接成功之后 点击test，之后就会出来了 connection successful的提示框，说明已经可以连接到你的github账户了。
+
+                连接成功之后还需要连接下载的git，还是直接在settings中查找git，将git的安装路径输入，点击text，成功之后也会出来个connection successful的提示框，一般只要是看到successful就是没有什么问题了。只要不是提示什么fail啊，error的就继续往下一步吧！
+
+                点击test，之后就会出来了 connection successful的提示框，说明已经可以连接到你的github账户了。
+
+                连接成功之后还需要连接下载的git，还是直接在settings中查找git，将git的安装路径输入，点击text，成功之后也会出来个connection successful的提示框，一般只要是看到successful就是没有什么问题了。只要不是提示什么fail啊，error的就继续往下一步吧！
+            </p>
+        </div>
+        <div id="right" class="ui">
+            <div class="logo"></div>
+            <div class="logo"></div>
+            <div class="logo"></div>
+            <div class="logo"></div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>搜索匹配</title>
+    <style>
+        textarea{
+            width: 272px;
+            height: 156px;
+            resize: none;
+            padding: 5px;
+            margin: 0;
+        }
+        #Input{
+            width: 278px;
+        }
+        #searchBox{
+            margin-top: 20px;
+        }
+        input[type='button']{
+            margin-left: 10px;
+            background-color: cornflowerblue;
+        }
+        #resultBox{
+            border: dotted 1px darkgrey;
+            width: 282px;
+            height: 400px;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        #resultBox div{
+            color: black;
+            padding: 3px;
+            height: 24px;
+            font-size: 14px;
+            line-height: 24px;
+        }
+        div#resultBox span{
+            background-color: greenyellow;
+        }
+    </style>
+</head>
+<body>
+
+    <textarea placeholder="请输入内容，以符号分割"></textarea>
+    <input type="button" id="insert" value="插入">
+    <div id="searchBox">
+        <input type="text" id="Input">
+        <input type="button" id="research" value="查询">
+    </div>
+
+    <div id="resultBox">
+
+    </div>
+
+
+
+    <script type="text/javascript">
+
+        var textarea = document.getElementsByTagName('textarea')[0];
+        var Input = document.getElementById('Input');
+        var resultBox = document.getElementById('resultBox');
+        var btnInsert = document.getElementById('insert');
+        var btnResearch = document.getElementById('research');
+        var strArr = [];
+
+        function InsertHandle() {
+
+            var str = textarea.value.trim();
+
+            /* 拆分字符串*/
+            var word = str.split(/[^0-9a-zA-Z\u4e00-\u9fa5]+/).filter(function (e) {
+                if(e!=null && e.length>0)
+                    return true;
+                else
+                    return false;
+            });
+            strArr = strArr.concat(word);
+            /* end */
+
+            Render();
+        }
+
+        function ResearchHandle() {
+            var str = Input.value.trim();
+            var flag = true;
+
+            for(var i=0; i<str.length; i++) {
+                if(/[^0-9a-zA-Z\u4e00-\u9fa5]+/.test(str[i])) {
+                    flag = false;
+                    alert('输入有误！');
+                    break;
+                }
+            }
+            if(flag) {
+                Render(str);
+            }
+        }
+
+        //字符串着色
+        function Render(str) {
+            resultBox.innerHTML = strArr.map(function (d) {
+                if(str!=null && str.length>0) {
+                    // 用<span>...</span>替换正则表达式里面的内容
+                    d = d.replace(new RegExp(str, 'g'), '<span class="select">' + str + '</span>');
+                }
+
+                return '<div>' + d + '</div>';
+            }).join('');
+        }
+
+
+        function init() {
+            btnInsert.addEventListener('click', InsertHandle);
+            btnResearch.addEventListener('click', ResearchHandle);
+        }
+        init();
+
+    </script>
+</body>
+</html>

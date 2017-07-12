@@ -1,0 +1,92 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.container{
+    width: 700px;
+    height: 700px;
+    margin: 0 auto;
+}
+#chessTable{
+    width: 75%;
+    height: 75%;
+    margin: 0 auto;
+}
+#chessTable table{
+    margin: 0 auto;
+
+}
+td{
+    border: #aca4a4 1px solid;
+    width: 40px;
+    height: 40px;
+}
+
+#oprtBox{
+    width: 69%;
+    height: 72%;
+    margin: 0 auto;
+}
+div.oprtArea{
+    margin: 10px auto;
+    width: 300px;
+    height: 30px;
+}
+div.oprtArea button{
+    margin-left: 10px;
+}
+#oprtBox table{
+    width: 78%;
+    margin: 10px auto;
+    table-layout: fixed;
+}
+
+#oprtBox table td{
+    border: none;
+    text-align: left;
+    font-size: 14px;
+    line-height: 18px;
+    height: 22px;
+}
+#oprtBox table td:first-child{
+    width: 12px;
+}
+
+
+/*行号样式*/
+.number{
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    border: none;
+}
+
+/*方块初始化样式*/
+.TOP{
+    width: 0;
+    height: 0;
+    border-bottom: 40px solid #6898c2;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+}
+.BOTTOM{
+    width: 0;
+    height: 0;
+    border-top: 40px solid #6898c2;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+}
+.LEFT{
+    width: 0;
+    height: 0;
+    border-right: 40px solid #6898c2;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+}
+.RIGHT{
+    width: 0;
+    height: 0;
+    border-left: 40px solid #6898c2;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+}

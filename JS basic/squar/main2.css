@@ -1,0 +1,129 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.container{
+    width: 1100px;
+    height: 800px;
+    margin: 0 auto;
+}
+#chessTable{
+    width: 100%;
+    height: 62%;
+    margin: 20px auto;
+    display: flex;
+    justify-content: flex-start;
+}
+#chessTable table{
+    width: 470px;
+    height: 470px;
+}
+td{
+    border: #aca4a4 1px solid;
+    width: 40px;
+    height: 40px;
+}
+.cmdMessage{
+    margin-left: 30px;
+    width: 420px;
+    height: 300px;
+    padding: 10px;
+}
+.cmdMessage h2{
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+fieldset{
+    width: 480px;
+    height: 250px;
+}
+div.oprtArea{
+    margin: 10px auto;
+    width:100px;
+    height: 30px;
+}
+div.oprtArea button{
+    margin-left: 10px;
+}
+div.cmdArea{
+    width: 430px;
+    height: 170px;
+    margin: 0 auto;
+    display: flex;
+}
+#cmdRowNum{
+    width: 30px;
+    height: 100%;
+    background-color: #dddddd;
+    padding: 5px 0px;
+    font-size: 14px;
+    line-height: 18px;
+    text-align: center;
+    color: white;
+}
+
+.error{/*错误命令行号的样式*/
+    width: 18px;
+    margin: 0 auto;
+    background-color: red;
+    border-radius: 50%;
+}
+
+#cmdText{
+    width: 406px;
+    height: 160px;
+    margin: 0px auto;
+    padding: 5px;
+    background-color: black;
+    color: #03ff10;
+    font-size: 14px;
+    line-height: 18px;
+    border:none;
+}
+
+
+/*行号样式*/
+.number{
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    border: none;
+}
+
+/*方块初始化样式*/
+.TOP{
+    width: 0;
+    height: 0;
+    border-bottom: 40px solid #6898c2;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+}
+.BOTTOM{
+    width: 0;
+    height: 0;
+    border-top: 40px solid #6898c2;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+}
+.LEFT{
+    width: 0;
+    height: 0;
+    border-right: 40px solid #6898c2;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+}
+.RIGHT{
+    width: 0;
+    height: 0;
+    border-left: 40px solid #6898c2;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+}
+
+
+
+
+
+
+
