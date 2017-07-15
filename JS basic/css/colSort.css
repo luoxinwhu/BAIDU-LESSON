@@ -1,0 +1,62 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+fieldset{
+    width: 330px;
+    height: 170px;
+    margin: 30px auto;
+    padding: 10px;
+    background-color: #daf1fb;
+    font-size: 14px;
+}
+#rowIn, #colIn{
+    width: 40px;
+    height: 20px;
+    border-radius: 3px;
+    border: 1px solid gray;
+}
+#dataText{
+    margin-top: 10px;
+    padding-left: 5px;
+    font-size: 14px;
+    width: 316px;
+    height: 110px;
+    resize: none;
+    border-radius: 3px;
+    border: 1px solid gray;
+}
+button{
+    border: 1px solid gray;
+    border-radius: 3px;
+    background-color: #ffffff;
+    padding: 1px 3px;
+    margin-left: 10px;
+    height: 24px;
+    width: 36px;
+    line-height: 18px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+table{
+    border: #189075 2px solid;
+    border-collapse: collapse;  /*合并边框*/
+    margin: 20px auto;
+    table-layout: auto;
+
+}
+td{
+    border: #16725a 1px solid;
+    padding: 5px;
+    text-align: center;
+    min-width: 50px;
+    min-height: 20px;
+}
+
+.thead{
+    background-color: #189075;
+    font-size: 20px;
+    font-weight: 400;
+    color: #ffffff
+}
+
