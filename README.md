@@ -5,14 +5,14 @@
 
 1. 听命令的方块
 
-file name: square.html | square2.html | square3.html
+file name: square.html | square2.html | square3.html <br/>
 demo src: https://htmlpreview.github.io/?https://github.com/luoxinwhu/BAIDU-LESSON/blob/master/HTML/square3.html
 
 2. 浮出层
-file name: upLayer.html
+file name: upLayer.html <br/>
 demo src: https://htmlpreview.github.io/?https://github.com/luoxinwhu/BAIDU-LESSON/blob/master/HTML/upLayer.html
 
 3. 表格排序
-file name: tableSort.html
+file name: tableSort.html <br/>
 demo src: https://htmlpreview.github.io/?https://github.com/luoxinwhu/BAIDU-LESSON/blob/master/HTML/tableSort.html
 
