@@ -9,8 +9,7 @@ var btnCreate = document.getElementById('btnCreate'),
     rowNum = document.getElementById('rowIn').value,
     colNum = document.getElementById('colIn').value,
     dataText = document.getElementById('dataText'),
-    table1 = document.getElementById('autoTable'),
-    tr = document.getElementsByTagName('tr');
+    table1 = document.getElementById('autoTable');
 
 var MINROW = 3,
     MINCOL = 5;
@@ -20,6 +19,7 @@ var dataInit = [
     ['Diana', 90, 80, 90, 260],
     ['Mike', 80, 60, 90, 230]
 ];
+var theadID = ['name', 'English', 'Math','Chinese', 'score'];
 
 function createTable() {
     var tr = [];
@@ -30,30 +30,28 @@ function createTable() {
     else {
         for(var i=0; i<rowNum; i++) {
             tr[i] = document.createElement('tr');
-            if(i>=1) {
-                tr[i].className = 'tbody';
-            }
             table1.appendChild(tr[i]);
 
             var td = [];
             for(var j=0; j<colNum; j++) {
                 td[j] = document.createElement('td');
-                td[j].innerHTML = dataInit[i][j];
+                td[j].textContent = dataInit[i][j];
                 tr[i].appendChild(td[j]);
+            }
+
+            if(i===0) {
+                //给表头增加样式
+                tr[0].className = 'thead';
+            }
+            else {
+                tr[i].className = 'tbody';
             }
         }
 
-        //给表头增加样式
-        tr[0].className = 'thead';
-        //给表头增加排序图标
-        for(var j=1; j<colNum; j++) {
-            tr[0].childNodes[j].innerHTML += '<img src="images/sort.png" id="iconSort" width="15px" height="15px" style="margin-left: 5px; cursor: pointer">';
+        for(var j=0; j<colNum; j++) {
+            tr[0].childNodes[j].innerHTML += '<div class="iconUp"></div><div class="iconDown"></div>';
         }
-        //绑定排序函数
-        var iconSort = document.getElementById('iconSort');
-        iconSort.addEventListener('click', function (event) {
-            sortTable(table1, 1, 'int');
-        });
+
     }
 }
 
@@ -75,9 +73,8 @@ function dataSplit() {
  * 表格列排序
  * @param tableId   表格ID
  * @param iCol      第几列
- * @param dataType  数据类型
  */
-function sortTable(tableId, iCol, dataType) {
+function sortTable(tableId, iCol) {
     var table = tableId,
         colRows = table.rows,
         aTrs = [];
@@ -92,7 +89,7 @@ function sortTable(tableId, iCol, dataType) {
         aTrs.reverse();
     }
     else{
-        aTrs.sort(sortFn(iCol, dataType));
+        aTrs.sort(sortFn(iCol));
     }
 
     //创建新的table存放排序后的结果
@@ -102,6 +99,7 @@ function sortTable(tableId, iCol, dataType) {
     }
     table.appendChild(oFragment);
     table.sortCol = iCol;   //记录最后一次排序的列索引
+    updateTable(aTrs);
 }
 
 /**
@@ -109,15 +107,11 @@ function sortTable(tableId, iCol, dataType) {
  * @param iCol
  * @param dataType
  */
-function sortFn(iCol, dataType) {
+function sortFn(iCol) {
 
     return function (oTR1, oTR2) {
-       /* var data1 = dataConvert(oTR1.cells[iCol], dataType);
-        console.log(oTR1.cells[iCol]);
-        var data2 = dataConvert(oTR2.cells[iCol], dataType);*/
-
-       var data1 = oTR1.cells[iCol];
-       var data2 =oTR2.cells[iCol];
+        var data1 = oTR1.cells[iCol];
+        var data2 =oTR2.cells[iCol];
 
         if(data1 < data2) {
             return -1;
@@ -130,21 +124,17 @@ function sortFn(iCol, dataType) {
     };
 }
 
-/*function dataConvert(data, dataType) {
-    switch (dataType) {
-        case 'int':
-            return parseInt(data);
-            break;
-        case 'float':
-            return parseFloat(data);
-            break;
-        case 'date':
-            return new Date(Date.parse(data)); //解析一个日期时间字符串,并返回 1970/1/1 午夜距离该日期时间的毫秒数。
-        default:
-            return data.toString();
-            break;
+/**
+ * 更新表格内容
+ * @param dataArr 新的表格数据
+ */
+function updateTable(dataArr) {
+    var tr = document.getElementsByTagName('tr');
+    for(var i=1; i<rowNum; i++) {
+        tr[i] = dataArr[i-1];
+        console.log(tr[i]);
     }
-}*/
+}
 
 //================ EVENT BIND ======================//
 
@@ -153,7 +143,7 @@ btnClear.addEventListener('click', function () {
     colNum = 5;
     dataText.value = '';
     /*var td = document.getElementsByTagName('td');
-    td.innerHTML = '';*/
+     td.innerHTML = '';*/
 });
 btnCreate.addEventListener('click', function () {
     createTable(dataInit);
@@ -162,6 +152,21 @@ btnInput.addEventListener('click', function () {
     dataSplit();
 });
 
+table1.onclick = function (e) {
+    var iconUp = document.getElementsByClassName('iconUp');
+    var target = e.target;
 
 
 
+};
+
+
+/*
+//给表头增加排序图标
+for(var j=0; j<colNum; j++) {
+    //绑定排序函数
+
+    iconSort.addEventListener('click', function (event) {
+        sortTable(table1, j);
+    });
+}*/

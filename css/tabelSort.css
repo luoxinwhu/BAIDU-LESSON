@@ -1,6 +1,6 @@
 *{
-    padding: 0;
-    margin: 0;
+    margin:0;
+    padding:0;
 }
 fieldset{
     width: 330px;
@@ -38,25 +38,45 @@ button{
     vertical-align: middle;
     cursor: pointer;
 }
-table{
+table.gradeStu{
     border: #189075 2px solid;
     border-collapse: collapse;  /*合并边框*/
     margin: 20px auto;
     table-layout: auto;
-
+    font-size:14px;
 }
-td{
+table.gradeStu tr{
+    text-align: center;
+}
+table.gradeStu td,table.gradeStu th{
     border: #16725a 1px solid;
     padding: 5px;
     text-align: center;
     min-width: 50px;
     min-height: 20px;
 }
-
-.thead{
-    background-color: #189075;
-    font-size: 20px;
-    font-weight: 400;
-    color: #ffffff
+table.gradeStu th{
+    font-weight : bold;
+    background-color:#189075;
+    border: 1px solid #fff;
+    color:white;
+    position: relative;
 }
-
+div.upButt{
+    width:0;
+    height:0;
+    display: inline-block;
+    border-bottom: #ffffff 15px solid;
+    border-left: transparent 5px solid;
+    border-right: transparent 5px solid;
+    cursor: pointer;
+}
+div.downButt{
+    display: inline-block;
+    width: 0;
+    height:0;
+    border-top: #ffffff 15px solid;
+    border-left: transparent 5px solid;
+    border-right: transparent 5px solid;
+    cursor: pointer;
+}
