@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>动态数据绑定</title>
+</head>
+<body>
+    <script type="text/javascript">
+
+        //================ Event  constructor ==================//
+
+        function Event() {
+            this.events = {};
+        }
+        //监听事件
+        Event.prototype.on = function (attr, callback) {
+            let self = this;
+            if(self.events[attr]) {
+                self.events[attr].push(callback);
+            }
+            else{
+                self.events[attr] = [callback];
+            }
+        };
+        //移除事件
+        Event.prototype.off = function (attr) {
+            let self = this;
+            for(let key in self.events) {
+                if(self.events.hasOwnProperty(key) && key===attr) {
+                    delete self.events[key];
+                }
+            }
+        };
+        //触发事件
+        //rest参数（形式为“...变量名”），用于获取函数的多余参数
+        Event.prototype.emit = function(attr, ...arg) {
+            let self = this;
+            self.events[attr] && self.events[attr].forEach(function (item) {
+                item(...arg);
+            });
+        };
+
+        let _eventObj = new Event();
+
+
+        //============ Observer constructor =====================//
+
+        function Observer(data){
+            this.data = data;
+            this.walk(data);//递归算法
+            this.events = _eventObj;
+        }
+
+        /**
+         *用于深层次遍历对象的各个属性,采用递归思路
+         * @param obj 调用这个函数的对象
+         * */
+        Observer.prototype.walk=function(obj){
+            for(let key in obj){
+
+                // 这里为什么要用hasOwnProperty进行过滤呢？
+                // 因为for...in 循环会把对象原型链上的所有可枚举属性都循环出来
+                // 而我们想要的仅仅是这个对象本身拥有的属性，所以要这么做。
+                if(obj.hasOwnProperty(key)){
+
+                    let val = obj[key]; //取出具有obj对象属性key的值
+                    if(typeof val==="object"){
+                        //如果对象的属性仍然是一个对象的话，那么继续new一个Observer，直到到达最底层的属性位置。
+                        new Observer(val);
+                    }
+
+                    this.convert(key,val);
+                }
+            }
+        };
+
+        //为对象的每一个属性绑定getter和setter
+        Observer.prototype.convert=function(key,val){
+            let self = this;
+
+            //通过 data 属性要能够访问到传递进去的对象
+            //Object.defineProperty(obj, prop, descriptor)
+            Object.defineProperty(this.data, key, {
+                enummerable: true,
+                configurable: true,
+                get:function(){
+                    console.log('你访问了'+key);
+                    return val;
+                },
+                set:function(newVal){
+                    console.log('你设置了'+key + ',新的'+key+'='+newVal);
+                    val = newVal;
+                    //触发事件
+                    self.events.emit(key, val, newVal);
+                    //如果setter的newval是对象的话
+                    if(typeof newVal==='object') {
+                        new Observer(val);
+                    }
+                }
+            });
+        };
+
+        Observer.prototype.$watch = function (attr, callback) {
+            this.events.on(attr, callback);
+        };
+
+
+        //对象实例化Observer对象
+        let app1 = new Observer({
+            user: {
+                name: 'luoxin',
+                age: 25
+            },
+            address: {
+                city: 'FuJian'
+            }
+        });
+        let app2 = new Observer({
+            width: 230,
+            height: 20,
+            type: 'desk'
+        });
+
+        app1.$watch('age', function (oldVal, newVal) {
+            console.log('我的年龄变了，原来的年龄是：' +oldVal + '现在的年龄是：'+ newVal);
+        });
+        app1.$watch('age', function (oldVal, newVal) {
+            console.log('我的年龄变化至为：' + (oldVal-newVal));
+        });
+
+
+
+
+
+       //====================== DEMO ==========================//
+        app1.data.user.age = 20;
+        app2.data.width = 250;
+        app2.data.type;
+
+
+    </script>
+</body>
+</html>

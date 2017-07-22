@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>深层次数据变化如何逐层往上传播</title>
+</head>
+<body>
+    <div id="app">
+        <p>姓名：{{user.name}}</p>
+        <p>年龄：{{user.age}}</p>
+    </div>
+
+<script type="text/javascript">
+
+    //================ Event  constructor ==================//
+
+    function Event() {
+        this.events = {};
+    }
+
+    Event.prototype = {
+        /**
+         * 监听事件
+         * @param attr 事件属性值
+         * @param callback 回调函数
+         * */
+        on: function (attr, callback) {
+            let self = this;
+            if(self.events[attr]) {
+                self.events[attr].push(callback);
+            }
+            else{
+                self.events[attr] = [callback];
+            }
+        },
+        //移除事件
+        off:  function (attr) {
+        let self = this;
+        for(let key in self.events) {
+            if(self.events.hasOwnProperty(key) && key===attr) {
+                delete self.events[key];
+            }
+        }
+    },
+
+        /**
+         * 触发事件
+         * @param path 属性路径
+         * */
+        emit: function(path) {
+            const keys = path.split('.');   //切分字符串
+            var parent = '';
+
+            // map(callback [,thisArg...]) 对数组的每个元素调用定义的回调函数并返回包含结果的数组。
+            // "()=>{}" 是ES6内的箭头函数, (x)=> x+6 相当于 fuction(x) {return x+6;}
+            const depPaths = keys.map((key, index) => {
+                if(index===0) {
+                    return key;
+                }
+                else {
+                    let str = '';
+                    while(index--) {
+                        str = keys[index] + '.' + str;
+                    }
+                    return str + key;
+                }
+            });
+
+            depPaths.forEach((path)=>{
+                const fns = this.events[path];
+                if(fns && fns.length) {
+                    fns.forEach(function (item) {
+                        item();
+                    })
+                }
+            });
+        }
+    };
+
+    var _eventObj = new Event();
+
+
+    //============ Observer constructor =====================//
+
+    function Observer(data){
+        this.data = data;
+        this.walk(data);//递归算法
+        this.events = _eventObj;
+    }
+
+    Observer.prototype = {
+        /**
+         * walk（） 用于深层次遍历对象的各个属性,采用递归思路
+         * @param obj 调用这个函数的对象
+         * */
+        walk: function(obj, path){
+        var val;
+
+        for(let key in obj){
+            // 这里为什么要用hasOwnProperty进行过滤呢？
+            // 因为for...in 循环会把对象原型链上的所有可枚举属性都循环出来
+            // 而我们想要的仅仅是这个对象本身拥有的属性，所以要这么做。
+            if(obj.hasOwnProperty(key)){
+                val = obj[key];     //取出具有obj对象属性key的值
+                if(!path) {
+                    path = key;
+                }
+                else {
+                    path += key;
+                }
+
+                //如果对象的属性仍然是一个对象的话，那么继续new一个Observer，直到到达最底层的属性位置。
+                if(typeof val==="object"){
+                    new Observer(val);
+                    if(path) {
+                        path = path + '.';
+                    }
+                    this.walk(val, path);
+                }
+            }
+
+            this.convert(obj,key,val, path);
+        }
+    },
+
+        /**
+         * convert（） 为对象的每一个属性绑定getter和setter
+         * @param key   键
+         * @param val   值
+         */
+        convert : function(obj, key, val, path){
+        let self = this;
+
+        //通过 data 属性要能够访问到传递进去的对象
+        //Object.defineProperty(obj, prop, descriptor)
+        Object.defineProperty(obj, key, {
+            enummerable: true,
+            configurable: true,
+            get: function(){
+                console.log('你访问了'+key);
+                return val;
+            },
+            set: function(newVal){
+                console.log('你设置了'+key + ',新的'+key+'='+newVal);
+                val = newVal;
+                self.events.emit(path || key);  //触发事件
+                if(typeof newVal==='object') {  //如果setter的newval是对象的话
+                    new Observer(val);
+                }
+            }
+        });
+    },
+
+        /**
+         * $watch() 监听属性变化
+         * @param attr      属性
+         * @param callback  回调函数
+         */
+        $watch: function (attr, callback) {
+        this.events.on(attr, callback);
+    }
+    };
+
+
+    //================= Vue Constructor ====================//
+
+    /**
+     * Vue() DOM节点静态绑定数据的构造函数
+     * @param obj       DOM节点对象
+     * @param el{string}   DOM节点的选择器，支持#idname, .classname, tagname三种方式
+     */
+    function Vue(obj){
+        this.doms = this.findDoms(obj.el);
+        this.data = obj.data;
+        this.initDoms(obj.data);
+    }
+
+    Vue.prototype = {
+        /**
+         * 查找与el匹配的dom对象
+         * @param  el{string}        DOM节点的选择器
+         * @return doms{array}    获取的DOM对象的名称
+         */
+        findDoms:  function(el){
+            var doms = [];
+            if(/^#/.test(el)){          //id选择器
+                doms.push(document.getElementById(el.slice(1))); //slice(index)从指定位置截取字符串
+            } else if(/^\./.test(el)){  //class选择器
+                doms = document.getElementsByClassName(el.slice(1));
+            } else {                    //tagname选择器
+                doms = document.getElementsByTagName(el);
+            }
+            return doms;
+         },
+
+        initDoms: function(data){
+            if(this.doms.length <= 0){
+                return;
+            }
+            for (var i = this.doms.length - 1; i >= 0; i--) {
+                let dom = this.doms[i];
+                let str = dom.innerHTML;
+                let newStr = []; //获取每个dom,并处理中间的"{{}}"
+
+                while(str){
+                    let from = str.indexOf("{{");   //获取“{{”符号的位置
+                    let to = str.indexOf('}}');     //获取“}}”符号的位置
+                    if(from>=0 && to>from){
+                        var val = (new Function('with('+JSON.stringify(this.data)+'){var val = '+str.slice(from+2, to)+';}; return val;'))();
+                                // new Function(arguments, func_body), 是函数构造器的实例化操作
+                                // with(){}, 把一个对象的所有属性放到with语句所指定的作用域中,用with传入this.data这样页面的user.name才能找到
+                                // JSON.stringify(), 将 JavaScript 值转换为 JSON 字符串
+                                /*        (new Function(
+                                             'with(JSON.stringify(this.data)) {
+                                                var val = str.slice(from+2, to);
+                                             };
+                                             return val;'
+                                          ))();
+                                */
+
+                        str = str.replace(str.slice(from, to+2), val); // 用val替换“{{}}”这几个符号
+                    }
+                    else break;
+                }
+
+                dom.innerHTML = str;
+            }
+        }
+    };
+
+
+    
+    //====================== DEMO ==========================//
+
+    window.onload = function(){
+        let app = new Vue({
+            el: '#app',
+            data: {
+                user: {
+                    name: 'youngwind',
+                    age: 25
+                }
+            }
+        });
+    }();
+
+
+</script>
+</body>
+</html>

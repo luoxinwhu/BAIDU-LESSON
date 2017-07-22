@@ -78,17 +78,19 @@ table_1.addEventListener('click', function (event) {
     var classNameList = target.classList;
     var thIdName = ['name', 'English', 'Math','Chinese', 'score'];
     var trObj = document.querySelectorAll(".stu");
-    var tr = Array.prototype.slice.call(trObj,0);
-    var len = tr.length;
+    var tr = Array.prototype.slice.call(trObj,0); //从0位置开始截取,将具有length属性的对象转成数组
+
     for(var clickIndex =0, clickLength=thIdName.length; clickIndex<clickLength; clickIndex++){
         if(classNameList.contains(thIdName[clickIndex])){
             sortClick(clickIndex);
             break;
         }
     }
-    for(var j=0; j<len; j++){
+    for(var j=0; j<tr.length; j++){
         table_1.appendChild(tr[j]);
     }
+
+
     function sortClick(index){
         if( classNameList.contains("downButt") ){
             tr.sort(function(ele1,ele2){
