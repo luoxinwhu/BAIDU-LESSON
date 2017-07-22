@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>动态数据绑定</title>
+</head>
+<body>
+    <p>当数据发生变化时，重新渲染整个DOM</p>
+
+    <div id="app">
+        <p>姓名：{{user.name}}</p>
+        <p>年龄：{{user.age}}</p>
+    </div>
+
+
+    <script type="text/javascript">
+
+        /**
+         * 动态数据的构造函数
+         * @param       obj   数据对象
+         * @property    entry DOM节点的入口
+         */
+        function Vue(obj){
+            this.entry = document.querySelector(obj.el);
+            this.data = {};
+            this.init(obj);
+            this.events = eventObj;
+        }
+
+        /**
+         * Vue的原型函数
+         * @type {{ walk: Vue.walk           遍历属性
+         *          convert: Vue.convert     转换属性
+         *          $watch: Vue.$watch       绑定需要监听的属性
+         *          find： Vue.find          查询某个属性在data内的值
+         *          render： Vue.render      DOM渲染}}
+         */
+        Vue.prototype = {
+            walk: function (output, input) {
+                for(let key in input) {
+                    if(input.hasOwnProperty(key)) {
+                        if(typeof input[key] !== 'object' || input[key] === null) {
+                            this.convert(output, key, input[key]);
+                        }
+                        else{
+                            this.walk(output[key] = {}, input[key]);
+                        }
+                    }
+                }
+            },
+
+            //将输入转换成Vue实例上的访问器属性
+            convert: function (obj, key, value) {
+                let _value = value;
+                let _this = this;
+
+                //Object.defineProperty(obj, prop, descriptor)
+                Object.defineProperty(obj, key, {
+                    configurable: true,
+                    enumerable: true,
+                    get: function () {
+                        return _value;
+                    },
+                    set: function (newVal) {
+                        if(newVal===null || typeof newVal!=='object') {
+                            _value = newVal;
+                            _this.render(_this.data, _this.entry);
+                        }
+                        else{
+                            delete obj[key];
+                            _this.walk(obj[key], newVal);
+                            _this.render(_this.data, _this.entry);
+                        }
+                    }
+                })
+            },
+
+            //给某个属性绑定回调函数（发布-订阅模式）
+            $watch: function (attr, callback) {
+                this.events.on(attr, callback);
+            },
+
+            //查询某个属性在data中的值
+            find: function (keys, data) {
+                for(let i=0; i<keys.length; i++) {
+                    if(data.hasOwnProperty(keys[i])) {
+                        data = data[keys[i]];
+                    }
+                    else {
+                        data = undefined;
+                    }
+                }
+                return data;
+            },
+
+            //渲染页面
+            render: (function () {
+                let domCache;
+                return function (data, entry) {
+                    console.log('render() is running...');
+
+                    domCache = domCache || entry.innerHTML;
+                    let domInnerHTML = domCache;
+                    let reg = /{{.*}}/g;
+                    let tempArr = [];
+                    let matchCache, keyCache, value;
+
+                    // exec() 检测字符串中是否有与正则表达式相匹配的子串，匹配成功结果返回一个数组，否则返回null
+                    while(matchCache = reg.exec(domCache)) {
+                        tempArr.push(matchCache[0]);
+                    }
+                    tempArr.forEach((item)=>{
+                        keyCache = item.slice(2, -2).split('.');    //String.slice(start,end)截取字符串，0和1位置都是“{{”
+                        value = this.find(keyCache, data);          //返回data对象的tempArr数组中符合测试函数keyCache的第一个元素值
+                        if(value !== undefined && (typeof value !== 'object' || value === null)) {
+                            reg = new RegExp('{{' + keyCache.join('.') + '}}', 'g');
+                            domInnerHTML = domInnerHTML.replace(reg, value);    //用value替换domInnerHTML中符合reg表达式的内容
+                        }
+                    });
+
+                    entry.innerHTML = domInnerHTML;
+                }
+            }()),
+
+            init: function (obj) {
+                this.walk(this.data, obj.data);
+                this.render(this.data, this.entry);
+            }
+        };
+
+
+        //================ Event  constructor ==================//
+
+        function Event() {
+            this.events = {};
+        }
+
+        Event.prototype = {
+            /**
+             * 监听事件
+             * @param attr 事件属性值
+             * @param callback 回调函数
+             * */
+            on: function (attr, callback) {
+                let self = this;
+                if(self.events[attr]) {
+                    self.events[attr].push(callback);
+                }
+                else{
+                    self.events[attr] = [callback];
+                }
+            },
+            //移除事件
+            off:  function (attr) {
+                let self = this;
+                for(let key in self.events) {
+                    if(self.events.hasOwnProperty(key) && key===attr) {
+                        delete self.events[key];
+                    }
+                }
+            },
+
+            /**
+             * 触发事件
+             * @param path 属性路径
+             * */
+            emit: function(path) {
+                const keys = path.split('.');   //切分字符串
+                var parent = '';
+
+                // map(callback [,thisArg...]) 对数组的每个元素调用定义的回调函数并返回包含结果的数组。
+                // "()=>{}" 是ES6内的箭头函数, (x)=> x+6 相当于 fuction(x) {return x+6;}
+                const depPaths = keys.map((key, index) => {
+                    if(index===0) {
+                        return key;
+                    }
+                    else {
+                        let str = '';
+                        while(index--) {
+                            str = keys[index] + '.' + str;
+                        }
+                        return str + key;
+                    }
+                });
+
+                depPaths.forEach((path)=>{
+                    const fns = this.events[path];
+                    if(fns && fns.length) {
+                        fns.forEach(function (item) {
+                            item();
+                        })
+                    }
+                });
+            }
+        };
+
+        var eventObj = new Event();
+
+        //============================ demo ==================================//
+
+        let app  = new Vue({
+            el: '#app',
+            data: {
+                user:{
+                    name: 'luoxin',
+                    age: 23
+                },
+                school: 'WHU',
+                major: 'E&C'
+            }
+        });
+
+        app.data.school = 'FUZHOU';
+    </script>
+</body>
+</html>

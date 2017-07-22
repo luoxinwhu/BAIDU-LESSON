@@ -94,33 +94,33 @@
          * @param obj 调用这个函数的对象
          * */
         walk: function(obj, path){
-        var val;
+            var val;
 
-        for(let key in obj){
-            // 这里为什么要用hasOwnProperty进行过滤呢？
-            // 因为for...in 循环会把对象原型链上的所有可枚举属性都循环出来
-            // 而我们想要的仅仅是这个对象本身拥有的属性，所以要这么做。
-            if(obj.hasOwnProperty(key)){
-                val = obj[key];     //取出具有obj对象属性key的值
-                if(!path) {
-                    path = key;
-                }
-                else {
-                    path += key;
-                }
-
-                //如果对象的属性仍然是一个对象的话，那么继续new一个Observer，直到到达最底层的属性位置。
-                if(typeof val==="object"){
-                    new Observer(val);
-                    if(path) {
-                        path = path + '.';
+            for(let key in obj){
+                // 这里为什么要用hasOwnProperty进行过滤呢？
+                // 因为for...in 循环会把对象原型链上的所有可枚举属性都循环出来
+                // 而我们想要的仅仅是这个对象本身拥有的属性，所以要这么做。
+                if(obj.hasOwnProperty(key)){
+                    val = obj[key];     //取出具有obj对象属性key的值
+                    if(!path) {
+                        path = key;
                     }
-                    this.walk(val, path);
-                }
-            }
+                    else {
+                        path += key;
+                    }
 
-            this.convert(obj,key,val, path);
-        }
+                    //如果对象的属性仍然是一个对象的话，那么继续new一个Observer，直到到达最底层的属性位置。
+                    if(typeof val==="object"){
+                        new Observer(val);
+                        if(path) {
+                            path = path + '.';
+                        }
+                        this.walk(val, path);
+                    }
+                }
+
+                this.convert(obj,key,val, path);
+            }
     },
 
         /**
@@ -129,26 +129,26 @@
          * @param val   值
          */
         convert : function(obj, key, val, path){
-        let self = this;
+            let self = this;
 
-        //通过 data 属性要能够访问到传递进去的对象
-        //Object.defineProperty(obj, prop, descriptor)
-        Object.defineProperty(obj, key, {
-            enummerable: true,
-            configurable: true,
-            get: function(){
-                console.log('你访问了'+key);
-                return val;
-            },
-            set: function(newVal){
-                console.log('你设置了'+key + ',新的'+key+'='+newVal);
-                val = newVal;
-                self.events.emit(path || key);  //触发事件
-                if(typeof newVal==='object') {  //如果setter的newval是对象的话
-                    new Observer(val);
+            //通过 data 属性要能够访问到传递进去的对象
+            //Object.defineProperty(obj, prop, descriptor)
+            Object.defineProperty(obj, key, {
+                enummerable: true,
+                configurable: true,
+                get: function(){
+                    console.log('你访问了'+key);
+                    return val;
+                },
+                set: function(newVal){
+                    console.log('你设置了'+key + ',新的'+key+'='+newVal);
+                    val = newVal;
+                    self.events.emit(path || key);  //触发事件
+                    if(typeof newVal==='object') {  //如果setter的newval是对象的话
+                        new Observer(val);
+                    }
                 }
-            }
-        });
+            });
     },
 
         /**
@@ -157,8 +157,8 @@
          * @param callback  回调函数
          */
         $watch: function (attr, callback) {
-        this.events.on(attr, callback);
-    }
+            this.events.on(attr, callback);
+        }
     };
 
 
@@ -192,7 +192,6 @@
             }
             return doms;
          },
-
         initDoms: function(data){
             if(this.doms.length <= 0){
                 return;
@@ -238,10 +237,11 @@
             data: {
                 user: {
                     name: 'youngwind',
-                    age: 25
-                }
+                    age: 26
+                },
             }
         });
+
     }();
 
 
