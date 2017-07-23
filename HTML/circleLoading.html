@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>css3饼状loading效果</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #loadingPage{
+            width: 200px;
+            height: 200px;
+            margin: 30px auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .container{
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+        }
+        .out-circle {
+            position: relative;
+            left: 16px;
+            top: 16px;
+            width: 60px;
+            height:60px;
+            border: 2px solid #e02d98;
+            border-radius: 40px;
+        }
+        .out-cover {
+            position: relative;
+            left: 16px;
+            top: -52px;
+            width: 0;
+            height: 0;
+            border: 34px solid transparent;
+            border-left-color: #fff;
+            animation: spin 800ms infinite linear;
+        }
+
+        .in-circle1, .in-circle2 {
+            width: 38px;
+            height: 38px;
+            border-radius: 40px;
+            overflow: hidden;
+            position: relative;
+
+        }
+        .in-circle1 {
+            left: 29px;
+            top: -103px;
+            opacity: 1;
+            background-color: #ffa6d6;
+            /*animation: name duration timing-function delay iteration-count direction fill-mode play-state;*/
+            animation: hide 1.6s steps(1, end) infinite;
+        }
+        .in-circle2 {
+            left: 29px;
+            top: -141px;
+            opacity: 0;
+            background-color: #e02d98;
+            animation: show 1.6s steps(1, end) infinite;
+        }
+
+        .bottom, .middle, .cover {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+        }
+        /*旋转的扇形*/
+        .bottom {
+            border-radius: 40px 0 0 40px;
+            background-color: #e02d98;
+            transform-origin: right center; /*transform-origin: x-axis y-axis z-axis;允许您更改转换元素的位置*/
+            animation: spin 800ms infinite linear;
+            left: 0;
+            top: 0;
+        }
+
+        /*右半圆逐渐隐藏*/
+        .middle {
+            border-radius: 0 40px 40px 0;
+            background-color: #e02d98;
+            animation: hide 800ms steps(1, end) infinite;
+            left: 50%;
+            top: 0;
+            opacity: 1;
+        }
+        /*左半圆逐渐显示*/
+        .cover {
+            border-radius: 40px 0 0 40px;
+            background-color: #ffa6d6;
+            animation: show 800ms steps(1, end) infinite;
+            left: 0;
+            top: 0;
+            opacity: 0;
+        }
+        .in-circle2 .bottom, .in-circle2 .middle { background-color: #ffa6d6; }
+        .in-circle2 .cover { background-color: #e02d98; }
+
+        @keyframes spin {
+            0%   { transform: rotate(360deg); }
+            100% { transform: rotate(0deg); }
+        }
+        @keyframes hide {
+            0%        { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+        @keyframes show {
+            0%        { opacity: 0; }
+            50%, 100% { opacity: 1; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="loadingPage">
+        <div class="container">
+            <div class="out-circle"></div>
+            <div class="out-cover"></div>
+            <div class="in-circle1">
+                <div class="bottom"></div>
+                <div class="middle"></div>
+                <div class="cover"></div>
+            </div>
+            <div class="in-circle2">
+                <div class="bottom"></div>
+                <div class="middle"></div>
+                <div class="cover"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
