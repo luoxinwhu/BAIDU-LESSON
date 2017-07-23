@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>右击下拉菜单组件</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        #iconDropDown{
+            border: #adad63 2px ridge;
+            background: #eceeec;
+            width: 750px;
+            height: 300px;
+            margin: 30px auto ;
+            text-align: center;
+            font-size: 14px;
+            padding: 10px;
+        }
+        #iconDropDown:hover{
+            border: #71ecee 2px solid;
+        }
+        .menuDropDown{
+            display: none;
+            position: absolute;
+            width: 100px;
+            height: 150px;
+            border: #c1c1c1 1px ridge;
+            box-shadow: #9d9d9d 1px 2px 5px;
+            background: #ffffff;
+            padding: 5px 8px;
+        }
+        li{
+            list-style: none;
+            font-size: 13px;
+            line-height: 24px;
+        }
+        li:hover{
+            color: purple;
+            text-shadow: deeppink 4px 4px 10px;
+            cursor: pointer;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div id="iconDropDown">
+        <p>right click to see the detail menu.</p>
+    </div>
+    <div class="menuDropDown">
+        <ul>
+            <li class="op">menu item1</li>
+            <li class="op">menu item2</li>
+            <li class="op">menu item3</li>
+        </ul>
+    </div>
+    
+
+
+    <script type="text/javascript">
+        var body = document.getElementsByTagName('body')[0];
+        var iconDropDown = document.getElementById('iconDropDown');
+        var menuDropDown = document.getElementsByClassName('menuDropDown')[0];
+        var ops = document.querySelectorAll('.op');
+
+        function addEvent(obj,type,handle){
+            try{  // Chrome、FireFox、Opera、Safari、IE9.0及其以上版本
+                obj.addEventListener(type,handle,false);
+            }catch(e){
+                try{  // IE8.0及其以下版本
+                    obj.attachEvent('on' + type,handle);
+                }catch(e){  // 早期浏览器
+                    obj['on' + type] = handle;
+                }
+            }
+        }
+
+        //========================= event bind ===================================//
+
+        //只有在规定区域内右击才会显示菜单
+        addEvent(iconDropDown, 'contextmenu', function (event) {
+            console.log('right click event is called...');
+
+            var e = event || window.event;          //事件兼容
+            e.preventDefault();                     //阻止原有的菜单
+            e.returnValue = false;                  //在IE中阻止原有的菜单
+
+            menuDropDown.style.display = 'block';   //显示右击的菜单
+
+            var areaRight = iconDropDown.offsetLeft+ iconDropDown.offsetWidth;
+            var areaBottom = iconDropDown.offsetTop+ iconDropDown.offsetHeight;
+            var mouseX = e.clientX;
+            var mouseY = e.clientY;
+
+            // 右上角区域判断
+            if(mouseX+ menuDropDown.offsetWidth > areaRight && mouseY+menuDropDown.offsetHeight < areaBottom) {
+                menuDropDown.style.left = mouseX - menuDropDown.offsetWidth + 'px';
+                menuDropDown.style.top = mouseY + 'px';
+            }
+            // 左下角区域判断
+            else if(mouseX+ menuDropDown.offsetWidth < areaRight && mouseY+menuDropDown.offsetHeight > areaBottom) {
+                menuDropDown.style.left = mouseX + 'px';
+                menuDropDown.style.top = mouseY - menuDropDown.offsetHeight + 'px';
+            }
+            // 右下角区域判断
+            else if(mouseX+ menuDropDown.offsetWidth > areaRight && mouseY+menuDropDown.offsetHeight > areaBottom) {
+                menuDropDown.style.left = mouseX - menuDropDown.offsetWidth + 'px';
+                menuDropDown.style.top = mouseY - menuDropDown.offsetHeight + 'px';
+            }
+            else {
+                menuDropDown.style.left = mouseX + 'px';
+                menuDropDown.style.top = mouseY + 'px';
+            }
+        });
+
+        //在body范围左侧单击隐藏菜单
+        addEvent(body, 'click', function () {
+            console.log('> cancel display the menu');
+            menuDropDown.style.display = 'none';
+        });
+
+        //为每个选项添加点击事件
+        for(let i=0; i<ops.length; i++) {
+            addEvent(ops[i], 'click', function () {
+                window.event ? window.event.cancelBubble = true : e.stopPropagation(); //阻止事件冒泡
+                alert('你选择了'+ this.textContent);
+                menuDropDown.style.display = 'none';
+            });
+        }
+
+    </script>
+</body>
+</html>
