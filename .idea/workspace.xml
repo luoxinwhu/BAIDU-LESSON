@@ -330,7 +330,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../phantomjs" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.JavaScript" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="SearchEverywhereHistoryKey" value="find&#9;null&#9;null&#10;squar&#9;null&#9;null&#10;error:&#9;null&#9;null&#10;error&#9;null&#9;null&#10;value&#9;null&#9;null&#10;getDate&#9;null&#9;null" />
@@ -465,12 +465,12 @@
       <workItem from="1501115695173" duration="638000" />
       <workItem from="1501203648592" duration="4059000" />
       <workItem from="1501208962122" duration="453000" />
-      <workItem from="1501211330692" duration="225000" />
+      <workItem from="1501211330692" duration="484000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="315922000" />
+    <option name="totallyTimeSpent" value="316181000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
