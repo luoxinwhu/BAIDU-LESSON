@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>树形组件</title>
+    <link rel="stylesheet" href="treeModule.css">
+</head>
+<body>
+
+    <fieldset id="tree-module">
+        <legend>树形组件</legend>
+        <input type="text" id="searchText">&nbsp;
+        <button id="btn_search">搜索</button><button id="btn_clear">清除</button>
+        <br>
+        <p id="result"></p>
+        <div id="tree-area">
+            <div class="nodebody-visible">
+                <label class="node-header">
+                    <div class="arrow empty-arrow"></div>
+                    <span class="node-title">luoxin</span>
+                    <span>&nbsp;&nbsp;</span>
+                    <img class="addIcon" src="img/add.png">
+                </label>
+            </div>
+        </div>
+    </fieldset>
+
+    <script src="treeModule.js" type="text/javascript"></script>
+</body>
+</html>

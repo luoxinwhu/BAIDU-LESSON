@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>视差滚动</title>
+    <link rel="stylesheet" href="parallaxScroll.css" />
+    <script type="text/javascript" src="../less.min.js"></script>
+
+
+</head>
+<body>
+    <!--视差滚动方向：向下滚动-->
+    <div class="wrapper">
+
+        <!-- four layers
+           蝴蝶   最快
+           花瓣
+           小羽毛
+           大羽毛 最慢
+        -->
+        <div class="parallax" id="parall-bg1">
+            <img id="bg1-1" src="images/蝴蝶.png" alt="蝴蝶">
+            <img id="bg1-2" src="images/蝴蝶.png" alt="蝴蝶">
+            <img id="bg1-3" src="images/蝴蝶.png" alt="蝴蝶">
+            <img id="bg1-4" src="images/蝴蝶.png" alt="蝴蝶">
+            <img id="bg1-5" src="images/蝴蝶.png" alt="蝴蝶">
+        </div>
+
+        <div class="parallax" id="parall-bg2">
+            <img id="bg2" src="images/花瓣.png" alt="花瓣">
+        </div>
+
+        <div class="parallax" id="parall-bg3">
+            <img id="bg3-1" src="images/漂浮白色羽毛.png" alt="羽毛">
+            <img id="bg3-2" src="images/漂浮白色羽毛.png" alt="羽毛">
+            <img id="bg3-3" src="images/漂浮白色羽毛.png" alt="羽毛">
+        </div>
+
+        <div class="parallax" id="parall-bg4">
+            <img id="bg4-1" src="images/漂浮白色羽毛.png" alt="羽毛">
+            <img id="bg4-2" src="images/漂浮白色羽毛.png" alt="羽毛">
+
+        </div>
+        
+
+    </div>
+
+
+
+
+
+    <script type="text/javascript" src="../jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+
+</body>
+</html>

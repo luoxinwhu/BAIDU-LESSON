@@ -1,0 +1,128 @@
+
+*{
+    margin: 0;
+    padding: 0;
+}
+html{
+    overflow-y: scroll;
+}
+body{
+    /*径向渐变*/
+    background: -webkit-radial-gradient(circle,rgba(255, 177, 211, 0.14), rgba(241, 165, 197, 0.37), rgba(207, 141, 173, 0.37));
+    background: -moz-radial-gradient(circle,rgba(255, 177, 211, 0.14), rgba(241, 165, 197, 0.37), rgba(207, 141, 173, 0.37));
+    background: -o-radial-gradient(circle,rgba(255, 177, 211, 0.14), rgba(241, 165, 197, 0.37), rgba(207, 141, 173, 0.37));
+    background: radial-gradient(circle,rgba(255, 177, 211, 0.14), rgba(241, 165, 197, 0.37), rgba(207, 141, 173, 0.37));/* 标准的语法（必须放在最后）*/
+    overflow-x: hidden;
+    height: 4500px;
+}
+
+.wrapper{
+    position: relative;
+}
+
+
+.parallax{
+    position: fixed;
+    width: 1200px;
+    top: 0;
+    left: 50%;
+    margin-left: -600px;
+}
+#parall-bg1{
+    z-index: 1;
+    }
+    #bg1-1{
+        position: absolute;
+        top:50px;
+        left: -230px;
+    }
+    #bg1-2{
+        position: absolute;
+        top:1200px;
+        left: 200px;
+        width: 300px;
+        height: 200px;
+    }
+    #bg1-3{
+        position: absolute;
+        top:1700px;
+        left: 880px;
+        width: 200px;
+        height: 100px;
+    }
+    #bg1-4{
+        position: absolute;
+        top:1650px;
+        left: 960px;
+        width: 70px;
+        height: 40px;
+    }
+    #bg1-5{
+        position: absolute;
+        top:2650px;
+        right:-540px;
+        width: 800px;
+        height: 600px;
+    }
+
+
+
+#parall-bg2{
+    z-index: 2;
+    }
+/*花瓣*/
+#bg2 {
+    position: absolute;
+    width: 1423px;
+    height: 1500px;
+    top: 586px;
+}
+
+
+
+#parall-bg3{
+    z-index: 3;
+    }
+
+/*bg3-1~3羽毛*/
+#bg3-1{
+    position: absolute;
+    top:650px;
+    right:20px;
+}
+#bg3-2{
+    position: absolute;
+    top: 687px;
+    left: -68px;
+    width: 60px;
+    height: 90px;
+}
+#bg3-3{
+    position: absolute;
+    top: 750px;
+    left: 205px;
+    width: 90px;
+    height: 130px;
+}
+
+
+
+#parall-bg4{
+    z-index: 4;
+    }
+#bg4-1{
+    position: absolute;
+    top:600px;
+    left: -230px;
+    width: 260px;
+    height: 250px;
+}
+#bg4-2{
+    position: absolute;
+    top: 170px;
+    right: -180px;
+    width: 260px;
+    height: 260px;
+}
+
+
