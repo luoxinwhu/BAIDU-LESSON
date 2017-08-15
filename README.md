@@ -5,10 +5,10 @@
 
 
 #### 1. 听命令的方块（游戏）
-demo src: https://htmlpreview.github.io/?https://github.com/luoxinwhu/BAIDU-LESSON/blob/master/HTML/square/html/square3.html
+demo src: https://htmlpreview.github.io/?https://github.com/luoxinwhu/BAIDU-LESSON/blob/master/square/html/square3.html
 
 #### 2. 浮出层组件
-demo src: https://htmlpreview.github.io/?https://github.com/luoxinwhu/BAIDU-LESSON/blob/master/HTML/upLayerModule/index.html
+demo src: https://htmlpreview.github.io/?https://github.com/luoxinwhu/BAIDU-LESSON/blob/master/upLayerModule/index.html
 
 #### 3. 表格排序组件
 demo src: https://htmlpreview.github.io/?https://github.com/luoxinwhu/BAIDU-LESSON/blob/master/tableSort/index.html
